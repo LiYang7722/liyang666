@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的导航</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230e7a5f'/%3E%3Ccircle cx='17' cy='7' r='2.5' fill='%23fbbf24'/%3E%3Cpath d='M6 19V9h8v10M6 13h8' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f7f3; --surface:#ffffff; --ink:#24322d; --muted:#64746c; --line:#e3e8e0;
+  --accent:#0e7a5f; --accent-ink:#0a5c48; --soft:#e7efe9;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 20px 24px;}
+header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;flex:none;}
+.brand h1{margin:0;font-size:24px;letter-spacing:.5px;}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:14px;}
+.search{position:relative;flex:1;min-width:280px;max-width:420px;}
+.search input{width:100%;padding:12px 16px 12px 44px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:16px;color:var(--ink);outline:none;transition:border-color .15s, box-shadow .15s;}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,122,95,.14);}
+.search .s-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#93a198;display:flex;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 22px;}
+.chip{padding:11px 16px;min-height:44px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;color:var(--muted);cursor:pointer;font-family:inherit;}
+.chip:hover{border-color:var(--accent);color:var(--accent-ink);}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px;}
+.link-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;transition:border-color .15s, transform .15s;}
+.link-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.tile{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none;}
+.tile svg{width:20px;height:20px;}
+.t-teal{background:#e0f0ea;color:#0e7a5f;}
+.t-blue{background:#e4ebf8;color:#2b5fd9;}
+.t-amber{background:#faeeda;color:#b05a1d;}
+.t-cyan{background:#ddf1f4;color:#0b7285;}
+.t-rose{background:#f8e3ea;color:#c2415f;}
+.card-txt{min-width:0;}
+.card-txt b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-txt small{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.empty{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px;}
+.empty.show{display:block;}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;text-align:center;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+<!--
+===== 如何编辑这个页面 =====
+1. 添加链接：复制下方任意一个 .link-card 卡片，修改 tile 的颜色类（t-teal/t-blue/t-amber/t-cyan/t-rose）、
+   data-cat（common=常用 work=工作 study=学习 tools=工具 media=影音）、data-name、data-desc 和 href。
+2. 修改分类：调整上方 .chips 里的按钮文字，并让 data-cat 与卡片对应。
+3. 上传 GitHub 后想作为网站首页，把本文件改名为 index.html。
+=====
+-->
+<div class="wrap">
+<header>
+  <div class="brand">
+    <div class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l8-6 8 6"/><path d="M6 9v11h12V9"/></svg></div>
+    <div><h1>我的导航</h1><p>常用网站，一键直达</p></div>
+  </div>
+  <div class="search">
+    <span class="s-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg></span>
+    <input id="q" type="text" placeholder="搜索网站名称或简介，按 / 聚焦搜索">
+  </div>
+</header>
+
+<nav class="chips" id="chips" aria-label="分类筛选">
+  <button class="chip active" data-cat="all">全部</button>
+  <button class="chip" data-cat="common">常用</button>
+  <button class="chip" data-cat="work">工作</button>
+  <button class="chip" data-cat="study">学习</button>
+  <button class="chip" data-cat="tools">工具</button>
+  <button class="chip" data-cat="media">影音</button>
+</nav>
+
+<main class="grid" id="grid">
+
+  <a class="link-card" href="https://www.baidu.com" target="_blank" rel="noopener" data-cat="common" data-name="百度" data-desc="搜索">
+    <span class="tile t-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span>
+    <span class="card-txt"><b>百度</b><small>搜索</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.google.com" target="_blank" rel="noopener" data-cat="common" data-name="Google" data-desc="全球搜索">
+    <span class="tile t-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9z"/></svg></span>
+    <span class="card-txt"><b>Google</b><small>全球搜索</small></span>
+  </a>
+
+  <a class="link-card" href="https://github.com" target="_blank" rel="noopener" data-cat="common" data-name="GitHub" data-desc="代码与开源">
+    <span class="tile t-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6"/><path d="M15 6l6 6-6 6"/></svg></span>
+    <span class="card-txt"><b>GitHub</b><small>代码与开源</small></span>
+  </a>
+
+  <a class="link-card" href="https://mail.qq.com" target="_blank" rel="noopener" data-cat="common" data-name="邮箱" data-desc="QQ 邮箱">
+    <span class="tile t-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+    <span class="card-txt"><b>邮箱</b><small>QQ 邮箱</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.feishu.cn" target="_blank" rel="noopener" data-cat="work" data-name="飞书" data-desc="协作办公">
+    <span class="tile t-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span>
+    <span class="card-txt"><b>飞书</b><small>协作办公</small></span>
+  </a>
+
+  <a class="link-card" href="https://docs.qq.com" target="_blank" rel="noopener" data-cat="work" data-name="腾讯文档" data-desc="在线文档">
+    <span class="tile t-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg></span>
+    <span class="card-txt"><b>腾讯文档</b><small>在线文档</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.yuque.com" target="_blank" rel="noopener" data-cat="work" data-name="语雀" data-desc="知识库">
+    <span class="tile t-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg></span>
+    <span class="card-txt"><b>语雀</b><small>知识库</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.zhihu.com" target="_blank" rel="noopener" data-cat="study" data-name="知乎" data-desc="问答社区">
+    <span class="tile t-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-8.5 8.5c-1.6 0-3.1-.4-4.4-1.1L3 21l2.1-5.3A8.5 8.5 0 1121 11.5z"/></svg></span>
+    <span class="card-txt"><b>知乎</b><small>问答社区</small></span>
+  </a>
+
+  <a class="link-card" href="https://juejin.cn" target="_blank" rel="noopener" data-cat="study" data-name="掘金" data-desc="技术社区">
+    <span class="tile t-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6"/><path d="M15 6l6 6-6 6"/></svg></span>
+    <span class="card-txt"><b>掘金</b><small>技术社区</small></span>
+  </a>
+
+  <a class="link-card" href="https://weread.qq.com" target="_blank" rel="noopener" data-cat="study" data-name="微信读书" data-desc="阅读">
+    <span class="tile t-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 014 4v12a3 3 0 00-3-3H2z"/><path d="M22 4h-6a4 4 0 00-4 4v12a3 3 0 013-3h7z"/></svg></span>
+    <span class="card-txt"><b>微信读书</b><small>阅读</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.bilibili.com" target="_blank" rel="noopener" data-cat="study" data-name="Bilibili" data-desc="视频学习">
+    <span class="tile t-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg></span>
+    <span class="card-txt"><b>Bilibili</b><small>视频学习</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.deepl.com/translator" target="_blank" rel="noopener" data-cat="tools" data-name="DeepL" data-desc="翻译">
+    <span class="tile t-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h9M7.5 3v3"/><path d="M5 11c1.8 2.8 4.5 4.6 8 4.8"/><path d="M13 6l4 8 4-8"/><path d="M18 10h-2"/></svg></span>
+    <span class="card-txt"><b>DeepL</b><small>翻译</small></span>
+  </a>
+
+  <a class="link-card" href="https://cli.im" target="_blank" rel="noopener" data-cat="tools" data-name="草料二维码" data-desc="二维码工具">
+    <span class="tile t-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h3v3h-3zM18 18h2v2h-2zM14 18h2v2h-2zM18 14h2v2h-2z"/></svg></span>
+    <span class="card-txt"><b>草料二维码</b><small>二维码工具</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.canva.cn" target="_blank" rel="noopener" data-cat="tools" data-name="Canva" data-desc="设计工具">
+    <span class="tile t-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="15.5" r="1.4" fill="currentColor" stroke="none"/></svg></span>
+    <span class="card-txt"><b>Canva</b><small>设计工具</small></span>
+  </a>
+
+  <a class="link-card" href="https://music.163.com" target="_blank" rel="noopener" data-cat="media" data-name="网易云音乐" data-desc="音乐">
+    <span class="tile t-rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v11"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/></svg></span>
+    <span class="card-txt"><b>网易云音乐</b><small>音乐</small></span>
+  </a>
+
+  <a class="link-card" href="https://www.youtube.com" target="_blank" rel="noopener" data-cat="media" data-name="YouTube" data-desc="视频">
+    <span class="tile t-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg></span>
+    <span class="card-txt"><b>YouTube</b><small>视频</small></span>
+  </a>
+
+</main>
+
+<div class="empty" id="empty">没有匹配的网站，换个关键词试试</div>
+<footer>示例模板 · 复制任意卡片即可添加你自己的链接</footer>
+</div>
+
+<script>
+(function(){
+  var q=document.getElementById('q'), grid=document.getElementById('grid'),
+      chips=document.querySelectorAll('.chip'), empty=document.getElementById('empty');
+  function apply(){
+    var kw=(q.value||'').trim().toLowerCase();
+    var cat=document.querySelector('.chip.active').dataset.cat;
+    var shown=0;
+    grid.querySelectorAll('.link-card').forEach(function(c){
+      var ok=(cat==='all'||c.dataset.cat===cat)&&(!kw||(c.dataset.name+' '+c.dataset.desc).toLowerCase().indexOf(kw)>-1);
+      c.style.display=ok?'':'none';
+      if(ok)shown++;
+    });
+    empty.classList.toggle('show',shown===0);
+  }
+  q.addEventListener('input',apply);
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('active');});
+      ch.classList.add('active');
+      apply();
+    });
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
